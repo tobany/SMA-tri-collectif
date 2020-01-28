@@ -21,7 +21,8 @@ class Agent:
             p = (prop / (self.k_moins + prop)) ** 2
             if random.uniform(0, 1) < p:
                 self.env.let_object(self.position, self.carry)
-        elif percept["H"] != 0:
+                self.carry = 0
+        elif percept["H"] != 0 and self.carry == 0:
             prop = self.memory.count(percept["H"]) / 10
             p = (self.k_plus / (self.k_plus + prop)) ** 2
             if random.uniform(0, 1) < p:

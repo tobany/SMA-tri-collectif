@@ -1,3 +1,5 @@
+import copy
+
 import numpy as np
 
 from Agent import Agent
@@ -54,10 +56,15 @@ class Grid:
 
     def let_object(self, pos, obj):
         if self.object_grid[pos[0]][pos[1]][0] == 0:
-            self.object_grid[pos[0]][pos[1]][0] = obj
+            self.object_grid[pos[0]][pos[1]][0] = copy.deepcopy(obj)
             return True
         else:
             return False
+
+    def show(self):
+        for i in self.object_grid:
+            print([k[0] for k in i])
+
 
 
 if __name__ ==  "__main__":
@@ -68,8 +75,10 @@ if __name__ ==  "__main__":
         g.place_agent(a)
         agents.append(a)
     print(g.object_grid)
-    for k in range(500):
+    for step in range(200000):
         for a in agents:
             a.act()
-        print(g.object_grid)
+        if step % 1000 == 0:
+            print("step {}".format(step))
+            g.show()
 
