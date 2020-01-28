@@ -20,6 +20,3 @@ class Grid:
     def place_agent(self, agent, pos):
         self.object_grid[pos[0]][pos[1]] = agent
 
-
-g = Grid(50, 200, 200)
-print(g.object_grid)
