@@ -12,7 +12,7 @@ class Agent:
         self.env = env
         self.position = [0, 0]
         self.carry = 0
-        self.error = 0.2
+        self.error = 0.05
 
 
     def act(self):

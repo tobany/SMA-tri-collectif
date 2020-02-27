@@ -24,7 +24,6 @@ class App(QMainWindow):
         self.show()
 
 
-
 class MyTableWidget(QWidget):
 
     def __init__(self, parent):
@@ -43,7 +42,7 @@ class MyTableWidget(QWidget):
         self.tabs.addTab(self.tab2, "Intermédiaire")
         self.tabs.addTab(self.tab3, "Finale")
 
-    #Generate first tab content
+        # Generate first tab content
         self.tab1.layout = QVBoxLayout(self)
         self.initTable = QTableWidget()
         self.create_table(self.initTable)
@@ -52,7 +51,7 @@ class MyTableWidget(QWidget):
 
         self.populateGrid(self.grid)
 
-    #Generate last tab content
+        # Generate last tab content
         self.tab3.layout = QVBoxLayout(self)
         self.finaleTable = QTableWidget()
         self.create_table(self.finaleTable)
@@ -71,13 +70,13 @@ class MyTableWidget(QWidget):
 
     def populateGrid(self, grid):
         agents = list()
-        nbIteration = 1000000
+        nbIteration = 2000000
         for i in range(20):
             a = Agent(10, 0.1, 0.3, 1, grid)
             grid.place_agent(a)
             agents.append(a)
         for k in range(nbIteration):
-            if k == nbIteration/2:
+            if k == nbIteration / 2:
                 self.createTab2()
             for a in agents:
                 # a.act()
@@ -96,22 +95,6 @@ class MyTableWidget(QWidget):
                     table.item(rowNb, columnNb).setBackground(QColor(200, 155, 0))
                 if column[1] == 'agent':
                     table.setItem(rowNb, columnNb, QTableWidgetItem('A'))
-        # self.tableWidget = QTableWidget()
-        # self.tableWidget.setRowCount(self.grid.size)
-        # self.tableWidget.setColumnCount(self.grid.size)
-        # for rowNb, row in enumerate(self.grid.object_grid):
-        #     for columnNb, column in enumerate(row):
-        #         self.tableWidget.setColumnWidth(columnNb, 1)
-        #         self.tableWidget.setItem(rowNb, columnNb, QTableWidgetItem())
-        #         if column[0] == 'A':
-        #             self.tableWidget.item(rowNb, columnNb).setBackground(QColor(155, 0, 0))
-        #         elif column[0] == 'B':
-        #             self.tableWidget.item(rowNb, columnNb).setBackground(QColor(200, 155, 0))
-        #         if column[1] == 'agent':
-        #             self.tableWidget.setItem(rowNb, columnNb, QTableWidgetItem('A'))
-
-
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
