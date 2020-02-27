@@ -80,7 +80,8 @@ class MyTableWidget(QWidget):
             if k == nbIteration/2:
                 self.createTab2()
             for a in agents:
-                a.act()
+                # a.act()
+                a.actWithError()
 
     def create_table(self, table):
         table.setRowCount(self.grid.size)

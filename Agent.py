@@ -12,10 +12,12 @@ class Agent:
         self.env = env
         self.position = [0, 0]
         self.carry = 0
+        self.error = 0.2
 
 
     def act(self):
         percept = self.env.get_perception(self.position)
+        print(self.memory)
         if self.carry != 0 and percept["H"] == 0:
             prop = self.memory.count(self.carry) / 10
             p = (prop / (self.k_moins + prop)) ** 2
@@ -25,6 +27,26 @@ class Agent:
         elif percept["H"] != 0 and self.carry == 0:
             prop = self.memory.count(percept["H"]) / 10
             p = (self.k_plus / (self.k_plus + prop)) ** 2
+            if random.uniform(0, 1) < p:
+                self.carry = self.env.take_object(self.position)
+        self.memory.append(percept["H"])
+        self.move()
+
+    def actWithError(self):
+        percept = self.env.get_perception(self.position)
+        if self.carry != 0 and percept["H"] == 0:
+            if percept["H"] == 'A':
+                p = (self.memory.count('A')+(self.memory.count('B')*self.error))/10
+            else:
+                p = (self.memory.count('B')+(self.memory.count('A')*self.error))/10
+            if random.uniform(0, 1) < p:
+                self.env.let_object(self.position, self.carry)
+                self.carry = 0
+        elif percept["H"] != 0 and self.carry == 0:
+            if percept["H"] == 'A':
+                p = (self.memory.count('A') + (self.memory.count('B') * self.error)) / 10
+            else:
+                p = (self.memory.count('B') + (self.memory.count('A') * self.error)) / 10
             if random.uniform(0, 1) < p:
                 self.carry = self.env.take_object(self.position)
         self.memory.append(percept["H"])
